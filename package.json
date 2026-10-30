@@ -1,0 +1,15 @@
+{
+  "name": "symbolhop",
+  "version": "0.1.0",
+  "description": "Exact go-to-definition, references, hover and diagnostics for coding agents, from the language servers you already have. An MCP server and CLI with no dependencies.",
+  "license": "MIT",
+  "author": "stanczykwyatt",
+  "type": "module",
+  "bin": { "symbolhop": "src/cli.js" },
+  "files": ["src", "README.md", "LICENSE"],
+  "engines": { "node": ">=20" },
+  "repository": { "type": "git", "url": "https://github.com/stanczykwyatt/symbolhop.git" },
+  "homepage": "https://stanczykwyatt.github.io/symbolhop/",
+  "keywords": ["mcp", "lsp", "language-server", "codex", "claude-code", "coding-agent", "go-to-definition", "references"],
+  "scripts": { "test": "node --test test/" }
+}

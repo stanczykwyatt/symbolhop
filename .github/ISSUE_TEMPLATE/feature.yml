@@ -1,0 +1,10 @@
+name: Idea
+description: A language, a tool or a feature you'd like.
+labels: [enhancement]
+body:
+  - type: textarea
+    id: idea
+    attributes:
+      label: What would you like?
+    validations:
+      required: true

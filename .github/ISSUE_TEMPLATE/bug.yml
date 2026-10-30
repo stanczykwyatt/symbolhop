@@ -1,0 +1,26 @@
+name: Bug report
+description: A wrong, missing or slow answer, or something else that isn't working.
+labels: [bug]
+body:
+  - type: textarea
+    id: what
+    attributes:
+      label: What happened?
+      description: What did you (or the agent) ask, and what came back? A small made-up project that shows it helps most.
+    validations:
+      required: true
+  - type: input
+    id: server
+    attributes:
+      label: Language and language server, with its version
+      description: For example "C, clangd 17.0.0".
+    validations:
+      required: true
+  - type: input
+    id: agent
+    attributes:
+      label: Agent or MCP client, with its version
+  - type: input
+    id: system
+    attributes:
+      label: Operating system and Node version

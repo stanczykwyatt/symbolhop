@@ -1,0 +1,109 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>symbolhop: go-to-definition and find-references for coding agents (LSP over MCP)</title>
+  <meta name="description" content="symbolhop gives Codex, Claude Code, Gemini CLI and other terminal coding agents exact go-to-definition, references, hover and diagnostics from the language servers you already have, through MCP. Read-only, no network, no dependencies.">
+  <meta name="keywords" content="lsp mcp server, codex lsp, claude code lsp, go to definition mcp, find references agent, language server mcp, coding agent code navigation">
+  <link rel="canonical" href="https://stanczykwyatt.github.io/symbolhop/">
+  <link rel="icon" href="icon.png">
+  <link rel="stylesheet" href="site.css">
+  <meta name="theme-color" content="#0d0f12">
+  <meta name="color-scheme" content="dark">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="symbolhop">
+  <meta property="og:description" content="Go-to-definition and find-references for coding agents, from your language servers. 10 exact lines instead of 77 from grep, in a measured example.">
+  <meta property="og:url" content="https://stanczykwyatt.github.io/symbolhop/">
+  <meta property="og:image" content="https://stanczykwyatt.github.io/symbolhop/social.png">
+  <meta property="og:image:width" content="1280">
+  <meta property="og:image:height" content="640">
+  <meta name="twitter:card" content="summary_large_image">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    "name": "symbolhop",
+    "description": "An MCP server and CLI that gives terminal coding agents go-to-definition, references, hover, diagnostics and outlines from the project's language servers.",
+    "operatingSystem": "macOS, Linux, Windows (Node 20 or later)",
+    "applicationCategory": "DeveloperApplication",
+    "url": "https://stanczykwyatt.github.io/symbolhop/",
+    "softwareVersion": "0.1.0",
+    "datePublished": "2026-12-01",
+    "license": "https://opensource.org/licenses/MIT",
+    "isAccessibleForFree": true,
+    "author": { "@type": "Person", "name": "Wyatt Stanczyk", "url": "https://wyattstanczyk.com" },
+    "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
+  }
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      { "@type": "Question", "name": "How do I give Codex go-to-definition and find-references?", "acceptedAnswer": { "@type": "Answer", "text": "Add symbolhop as an MCP server in ~/.codex/config.toml with the command npx -y github:stanczykwyatt/symbolhop#v0.1.0 serve. Codex then gets lsp_definition, lsp_references, lsp_hover, lsp_diagnostics and lsp_symbols, answered by your project's language server." } },
+      { "@type": "Question", "name": "Why not let the agent grep?", "acceptedAnswer": { "@type": "Answer", "text": "Grep returns comments, strings, log messages and similarly named symbols along with the real uses. In a measured example, it returned 77 lines for a function's uses, 67 of them not uses; lsp_references returned the 10 real ones." } },
+      { "@type": "Question", "name": "Is it safe to give an agent?", "acceptedAnswer": { "@type": "Answer", "text": "Yes. It only asks read-only questions, only about files inside the project, never writes anything, has no network access and no dependencies." } },
+      { "@type": "Question", "name": "Which languages does it support?", "acceptedAnswer": { "@type": "Answer", "text": "Any with a language server on your PATH that it knows: C, C++ and Objective-C with clangd, TypeScript and JavaScript, Python, Go, Rust, Swift, Java, Ruby, Lua and Zig." } }
+    ]
+  }
+  </script>
+</head>
+<body>
+  <div class="scene" aria-hidden="true"></div>
+  <main class="glass">
+    <div class="edge" aria-hidden="true"></div>
+    <div class="content">
+      <nav class="bar" aria-label="Site">
+        <a class="label" href="https://github.com/stanczykwyatt/symbolhop/releases/tag/v0.1.0">symbolhop · v0.1</a>
+        <a class="label" href="https://github.com/stanczykwyatt/symbolhop">github ↗</a>
+      </nav>
+      <section class="center">
+        <div class="title">
+          <img class="icon" src="icon.png" alt="" width="76" height="76">
+          <h1>symbolhop</h1>
+        </div>
+        <p class="lede">Go-to-definition and find-references for coding agents. Codex, Claude Code and Gemini CLI ask your language servers instead of grepping, and get exact answers in one short line each.</p>
+        <img class="shot" src="demo.gif" width="720" height="450" alt="Drawn demo: asked where count_entries is used, grep returns 77 lines, 67 of them comments, log messages and a similar function; lsp_references returns 10 lines, every one a use.">
+        <div class="actions" style="margin-top: 22px">
+          <a class="button solid" href="https://github.com/stanczykwyatt/symbolhop#set-it-up">Set it up</a>
+          <a class="button" href="https://github.com/stanczykwyatt/symbolhop">
+            <svg class="star" viewBox="0 0 16 16" aria-hidden="true"><path d="M8 1.4l1.95 4.02 4.43.6-3.23 3.08.79 4.4L8 11.38 4.06 13.5l.79-4.4L1.62 6.02l4.43-.6z"/></svg>
+            Star on GitHub
+          </a>
+        </div>
+        <p class="label">free · open source · mcp server and cli · read-only · no dependencies</p>
+      </section>
+      <section class="section" aria-labelledby="tools-title">
+        <h2 id="tools-title">Five questions, answered exactly</h2>
+        <ul class="verdicts">
+          <li class="key"><b>lsp_references:</b> every use of a symbol, without comments, strings or look-alikes.</li>
+          <li class="key"><b>lsp_definition:</b> where it's defined.</li>
+          <li><b>lsp_hover:</b> its type, signature and documentation.</li>
+          <li><b>lsp_diagnostics:</b> errors and warnings in a file right after an edit.</li>
+          <li><b>lsp_symbols:</b> a file's outline.</li>
+        </ul>
+      </section>
+      <section class="section" aria-labelledby="setup-title">
+        <h2 id="setup-title">Set up in one line</h2>
+        <ul class="verdicts">
+          <li><b>Codex</b> <code>~/.codex/config.toml</code>: <code>[mcp_servers.symbolhop]</code> with <code>command = "npx"</code>, <code>args = ["-y", "github:stanczykwyatt/symbolhop#v0.1.0", "serve"]</code></li>
+          <li><b>Claude Code:</b> <code>claude mcp add symbolhop -- npx -y github:stanczykwyatt/symbolhop#v0.1.0 serve</code></li>
+          <li><b>Gemini CLI and Cursor:</b> the same command under <code>mcpServers</code>.</li>
+        </ul>
+      </section>
+      <section class="section" aria-labelledby="faq-title">
+        <h2 id="faq-title">Questions</h2>
+        <details><summary>Why not let the agent grep?</summary><p>Grep returns comments, strings, log messages and similarly named symbols along with the real uses. In a <a href="https://github.com/stanczykwyatt/symbolhop/blob/main/bench/RESULTS.md">measured example</a>, it returned 77 lines for a function's uses, 67 of them not uses; lsp_references returned the 10 real ones.</p></details>
+        <details><summary>Is it safe to give an agent?</summary><p>It only asks read-only questions, only about files inside the project, never writes anything, has no network access and no dependencies. <a href="https://github.com/stanczykwyatt/symbolhop/blob/main/SECURITY.md">SECURITY.md</a> has the details.</p></details>
+        <details><summary>Which languages?</summary><p>Any with a language server on your PATH that it knows: C, C++ and Objective-C with clangd, TypeScript and JavaScript, Python, Go, Rust, Swift, Java, Ruby, Lua and Zig.</p></details>
+        <details><summary>Does Codex have this built in?</summary><p>Not yet; <a href="https://github.com/openai/codex/issues/8745">openai/codex#8745</a> asks for it. symbolhop works with Codex today through MCP.</p></details>
+      </section>
+      <footer class="foot">
+        <p>Also free: <a href="https://stanczykwyatt.github.io/mulligan/">mulligan</a>, <a href="https://stanczykwyatt.github.io/ai-footprint/">AI Footprint</a>, <a href="https://stanczykwyatt.github.io/who-stole-my-focus/">Who Stole My Focus</a>, <a href="https://stanczykwyatt.github.io/tonecap/">Tonecap</a>, <a href="https://stanczykwyatt.github.io/right-folder/">Right Folder</a> and more Mac utilities.</p>
+        <p>This site has no cookies or tracking. MIT License. Not affiliated with OpenAI, Anthropic, Google or Anysphere; Codex, Claude Code, Gemini and Cursor are their owners' trademarks, named only as what symbolhop works with. The code in the demo is made up.</p>
+      </footer>
+    </div>
+  </main>
+</body>
+</html>

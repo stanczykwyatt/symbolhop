@@ -1,0 +1,174 @@
+:root {
+  --gap: clamp(12px, 4.5vmin, 72px);
+  --inset: clamp(6px, 1.1vmin, 12px);
+  --radius: clamp(22px, 3.4vmin, 38px);
+  --ice: #9ed1ff;
+  --sans: -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
+  --mono: ui-monospace, "SF Mono", SFMono-Regular, Menlo, Consolas, monospace;
+}
+* { box-sizing: border-box; }
+html, body { height: 100%; }
+body {
+  margin: 0;
+  background: #0d0f12;
+  color: #fff;
+  font: 16px/1.5 var(--sans);
+  -webkit-font-smoothing: antialiased;
+}
+a { color: inherit; }
+a:focus-visible { outline: 2px solid #fff; outline-offset: 3px; border-radius: 6px; }
+
+/* Cool silver light behind the glass, with a faint lattice. */
+.scene {
+  position: fixed;
+  inset: 0;
+  background:
+    radial-gradient(40% 36% at 16% 20%, rgba(214, 226, 242, 0.62), transparent 70%),
+    radial-gradient(36% 34% at 86% 24%, rgba(150, 174, 206, 0.52), transparent 72%),
+    radial-gradient(44% 40% at 70% 88%, rgba(190, 206, 228, 0.46), transparent 70%),
+    radial-gradient(30% 28% at 24% 84%, rgba(112, 134, 166, 0.42), transparent 70%),
+    linear-gradient(180deg, #141820, #0d0f12);
+}
+.scene::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+  background-size: 56px 56px;
+  -webkit-mask-image: radial-gradient(ellipse at center, #000 20%, transparent 78%);
+  mask-image: radial-gradient(ellipse at center, #000 20%, transparent 78%);
+}
+
+.glass {
+  position: fixed;
+  inset: var(--gap);
+  border-radius: var(--radius);
+  background: rgba(16, 19, 24, 0.46);
+  -webkit-backdrop-filter: blur(28px) saturate(140%);
+  backdrop-filter: blur(28px) saturate(140%);
+  box-shadow: 0 30px 90px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.06);
+}
+.edge {
+  position: absolute;
+  inset: var(--inset);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-radius: calc(var(--radius) - var(--inset));
+  pointer-events: none;
+}
+.content {
+  position: absolute;
+  inset: var(--inset);
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+  padding: clamp(16px, 3vmin, 30px) clamp(18px, 4vmin, 40px);
+  scrollbar-width: thin;
+}
+
+.label {
+  font: 12px/1.4 var(--mono);
+  letter-spacing: 0.06em;
+  color: rgba(255, 255, 255, 0.55);
+  text-decoration: none;
+}
+a.label:hover { color: #fff; }
+.bar { display: flex; justify-content: space-between; gap: 12px; }
+@media (max-width: 400px) {
+  .bar .new { display: none; }
+}
+
+.center {
+  min-height: calc(100% - 40px);
+  padding: clamp(10px, 3vh, 28px) 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+.title { display: flex; flex-direction: column; align-items: center; margin-bottom: 8px; }
+.icon { width: clamp(56px, 9vh, 76px); height: auto; filter: drop-shadow(0 10px 24px rgba(0, 0, 0, 0.45)); }
+h1 {
+  margin: clamp(10px, 2vh, 18px) 0 0;
+  font-size: clamp(36px, min(6.6vw, 8.4vh), 70px);
+  font-weight: 600;
+  line-height: 1;
+  letter-spacing: -0.035em;
+}
+.lede { margin: 0 0 clamp(14px, 2.6vh, 22px); max-width: 36em; font-size: clamp(16px, 2.1vw, 19px); color: rgba(255, 255, 255, 0.72); }
+.actions { display: flex; flex-wrap: wrap; justify-content: center; gap: 12px; margin-bottom: 16px; }
+.button {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 11px 22px;
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  border-radius: 999px;
+  font-size: 15px;
+  font-weight: 600;
+  text-decoration: none;
+  transition: border-color 0.15s, background-color 0.15s;
+}
+.button:hover { border-color: rgba(255, 255, 255, 0.6); }
+.button .star { width: 15px; height: 15px; fill: #fff; }
+.button.solid { border-color: #fff; background: #fff; color: #0d0f12; }
+.button.solid:hover { background: rgba(255, 255, 255, 0.86); }
+
+.thanks { margin: 0 0 14px; font-size: 14px; color: rgba(255, 255, 255, 0.75); animation: drop 0.4s ease-out both; }
+@keyframes drop {
+  from { opacity: 0; transform: translateY(-12px); }
+  to { opacity: 1; transform: none; }
+}
+
+/* What you get and what it explains, then questions people search for, below the fold. */
+.section {
+  width: min(720px, 100%);
+  margin: clamp(20px, 5vh, 48px) auto clamp(8px, 2vh, 16px);
+  display: grid;
+  gap: 10px;
+}
+.section h2 { margin: 0 0 6px; font-size: 22px; font-weight: 600; letter-spacing: -0.02em; text-align: center; }
+.shot { width: 100%; height: auto; border-radius: 12px; border: 1px solid rgba(255, 255, 255, 0.14); box-shadow: 0 14px 36px rgba(0, 0, 0, 0.35); }
+.verdicts { display: grid; gap: 8px; margin: 6px 0 0; padding: 0; list-style: none; }
+.verdicts li {
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.04);
+  padding: 10px 16px;
+  color: rgba(255, 255, 255, 0.72);
+  font-size: 15px;
+}
+.verdicts b { color: #fff; }
+.verdicts .key b { color: var(--ice); }
+.section details {
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.04);
+  padding: 12px 16px;
+}
+.section summary { cursor: pointer; font-weight: 600; }
+.section details p { margin: 8px 0 0; color: rgba(255, 255, 255, 0.72); font-size: 15px; }
+  margin: 0;
+  padding: 14px 16px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 14px;
+  background: rgba(0, 0, 0, 0.28);
+  font: 13px/1.55 var(--mono);
+  color: rgba(255, 255, 255, 0.78);
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+.verdicts code, .section details code { font: 0.92em var(--mono); color: #fff; }
+
+.foot { display: grid; gap: 4px; margin-top: clamp(16px, 3vh, 28px); text-align: center; }
+.foot p { margin: 0; font: 11px/1.6 var(--mono); letter-spacing: 0.03em; color: rgba(255, 255, 255, 0.4); }
+.foot a { color: rgba(255, 255, 255, 0.7); }
+
+/* Page layout. */
+.content > * { flex-shrink: 0; }
+.shot { max-width: 100%; }
+.steps { display: grid; gap: 8px; margin: 0; padding-left: 20px; color: rgba(255, 255, 255, 0.78); text-align: left; }
+code { font: 0.92em var(--mono); color: #fff; overflow-wrap: anywhere; }
+.verdicts li { min-width: 0; overflow-wrap: anywhere; }

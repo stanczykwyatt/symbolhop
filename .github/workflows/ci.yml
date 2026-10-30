@@ -1,0 +1,51 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    strategy:
+      matrix:
+        os: [ubuntu-latest, macos-15]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+
+      - name: Install clangd for the live tests
+        if: runner.os == 'Linux'
+        run: sudo apt-get update && sudo apt-get install -y clangd
+
+      - name: Run tests
+        run: node --test test/
+
+      - name: Check the numbers in the README still hold
+        run: |
+          # The table and the ratios must match bench/RESULTS.md exactly; the clangd version line may differ.
+          node bench/measure.mjs | grep -E '^\||^Tokens' > measured.txt
+          sed -n '/<!-- output -->/,$p' bench/RESULTS.md | grep -E '^\||^Tokens' > recorded.txt
+          if ! diff recorded.txt measured.txt; then
+            echo "::error::The measurement changed. Update bench/RESULTS.md and the README's numbers."
+            exit 1
+          fi
+
+  rules:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+
+      - name: Check it never uses the network, a shell, a file write or anything that edits
+        run: node scripts/check-rules.mjs
+
+      - name: Check there are no dependencies
+        run: |
+          if grep -nE '"(dependencies|devDependencies|optionalDependencies|peerDependencies)"' package.json; then
+            echo "::error::symbolhop has no dependencies."
+            exit 1
+          fi
+          echo "No dependencies."
