@@ -130,13 +130,10 @@ None yet, honestly: it was built and tested without one installed. The MCP serve
 ## More free tools
 
 - **[mulligan](https://github.com/stanczykwyatt/mulligan):** undo for coding agents. A command line tool for macOS and Linux.
-- **[AI Footprint](https://github.com/stanczykwyatt/ai-footprint):** see what AI coding tools leave on your Mac, and what each update changed.
-- **[Who Stole My Focus](https://github.com/stanczykwyatt/who-stole-my-focus):** find out which app keeps jumping in front of your work, on Mac and [Windows](https://github.com/stanczykwyatt/who-stole-my-focus-windows).
-- **[Tonecap](https://github.com/stanczykwyatt/tonecap):** design your keyboard's sound, with no recordings, and hear it as you type.
-- **[Right Folder](https://github.com/stanczykwyatt/right-folder):** Open and Save dialogs, in the right folder.
-- **[Show Desktop](https://github.com/stanczykwyatt/show-desktop)**, **[Copy 2FA](https://github.com/stanczykwyatt/copy-2fa)**, **[Memo Export](https://github.com/stanczykwyatt/memo-export)**, **[Podcast Export](https://github.com/stanczykwyatt/podcast-export)**, **[Reading List Export](https://github.com/stanczykwyatt/reading-list-export)**, **[Unblock Eject](https://github.com/stanczykwyatt/unblock-eject)** and **[Next Departures](https://github.com/stanczykwyatt/next-departures)** for the Mac.
+- **[Who Stole My Focus](https://github.com/stanczykwyatt/who-stole-my-focus):** find out which app keeps jumping in front of your work.
+- **[Show Desktop](https://github.com/stanczykwyatt/show-desktop)** and **[Copy 2FA](https://github.com/stanczykwyatt/copy-2fa)** for the Mac.
 
-All but Next Departures have no internet access, and it connects only to the transit feeds you use.
+None of them has internet access.
 
 ## License
 
