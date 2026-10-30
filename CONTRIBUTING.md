@@ -11,7 +11,7 @@ Open a [bug report](https://github.com/stanczykwyatt/symbolhop/issues/new?templa
 You need Node 20 or later. The live tests need `clangd` (with Xcode's tools on a Mac, or `apt install clangd`); without it they're skipped.
 
 ```bash
-node --test test/            # the tests
+node --test test/*.test.js            # the tests
 node bench/measure.mjs       # the grep-versus-references measurement
 node src/cli.js doctor       # which language servers it finds
 node src/cli.js refs src/main.c 14 parse_config --root test/fixtures/c-project
@@ -33,7 +33,7 @@ There are no dependencies, on purpose: everything that runs is in `src/`.
 - **No network, no shell, no dependencies.**
 - **Short answers.** Agents pay for every token; keep output to a line per result.
 - **Made-up code only** in fixtures and measurements.
-- Run `node --test test/` before opening a pull request, and add a test with your change.
+- Run `node --test test/*.test.js` before opening a pull request, and add a test with your change.
 - Keep commits small, with a short message saying what changed and why.
 
 ## Security issues

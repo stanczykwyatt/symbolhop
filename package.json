@@ -11,5 +11,5 @@
   "repository": { "type": "git", "url": "https://github.com/stanczykwyatt/symbolhop.git" },
   "homepage": "https://stanczykwyatt.github.io/symbolhop/",
   "keywords": ["mcp", "lsp", "language-server", "codex", "claude-code", "coding-agent", "go-to-definition", "references"],
-  "scripts": { "test": "node --test test/" }
+  "scripts": { "test": "node --test test/*.test.js" }
 }
