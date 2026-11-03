@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <title>symbolhop: go-to-definition and find-references for coding agents (LSP over MCP)</title>
+  <title>symbolhop: go-to-definition for coding agents (LSP over MCP)</title>
   <meta name="description" content="symbolhop gives Codex, Claude Code, Gemini CLI and other terminal coding agents exact go-to-definition, references, hover and diagnostics from the language servers you already have, through MCP. Read-only, no network, no dependencies.">
   <meta name="keywords" content="lsp mcp server, codex lsp, claude code lsp, go to definition mcp, find references agent, language server mcp, coding agent code navigation">
   <link rel="canonical" href="https://stanczykwyatt.github.io/symbolhop/">
@@ -13,9 +13,11 @@
   <meta name="color-scheme" content="dark">
   <meta property="og:type" content="website">
   <meta property="og:title" content="symbolhop">
+  <meta property="og:site_name" content="symbolhop">
   <meta property="og:description" content="Go-to-definition and find-references for coding agents, from your language servers. 10 exact lines instead of 77 from grep, in a measured example.">
   <meta property="og:url" content="https://stanczykwyatt.github.io/symbolhop/">
   <meta property="og:image" content="https://stanczykwyatt.github.io/symbolhop/social.png">
+  <meta property="og:image:alt" content="symbolhop">
   <meta property="og:image:width" content="1280">
   <meta property="og:image:height" content="640">
   <meta name="twitter:card" content="summary_large_image">
@@ -37,17 +39,45 @@
   }
   </script>
   <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "FAQPage",
-    "mainEntity": [
-      { "@type": "Question", "name": "How do I give Codex go-to-definition and find-references?", "acceptedAnswer": { "@type": "Answer", "text": "Add symbolhop as an MCP server in ~/.codex/config.toml with the command npx -y github:stanczykwyatt/symbolhop#v0.1.0 serve. Codex then gets lsp_definition, lsp_references, lsp_hover, lsp_diagnostics and lsp_symbols, answered by your project's language server." } },
-      { "@type": "Question", "name": "Why not let the agent grep?", "acceptedAnswer": { "@type": "Answer", "text": "Grep returns comments, strings, log messages and similarly named symbols along with the real uses. In a measured example, it returned 77 lines for a function's uses, 67 of them not uses; lsp_references returned the 10 real ones." } },
-      { "@type": "Question", "name": "Is it safe to give an agent?", "acceptedAnswer": { "@type": "Answer", "text": "Yes. It only asks read-only questions, only about files inside the project, never writes anything, has no network access and no dependencies." } },
-      { "@type": "Question", "name": "Which languages does it support?", "acceptedAnswer": { "@type": "Answer", "text": "Any with a language server on your PATH that it knows: C, C++ and Objective-C with clangd, TypeScript and JavaScript, Python, Go, Rust, Swift, Java, Ruby, Lua and Zig." } }
-    ]
-  }
-  </script>
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "Why not let the agent grep?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Grep returns comments, strings, log messages and similarly named symbols along with the real uses. In a measured example, it returned 77 lines for a function's uses, 67 of them not uses; lsp_references returned the 10 real ones."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Is it safe to give an agent?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "It only asks read-only questions, only about files inside the project, never writes anything, has no network access and no dependencies. SECURITY.md has the details."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Which languages?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Any with a language server on your PATH that it knows: C, C++ and Objective-C with clangd, TypeScript and JavaScript, Python, Go, Rust, Swift, Java, Ruby, Lua and Zig."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Does Codex have this built in?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Not yet; openai/codex#8745 asks for it. symbolhop works with Codex today through MCP."
+      }
+    }
+  ]
+}
+</script>
 </head>
 <body>
   <div class="scene" aria-hidden="true"></div>
