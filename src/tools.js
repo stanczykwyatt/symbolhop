@@ -77,9 +77,12 @@ export function columnOf(lineText, symbol, occurrence = 1) {
 // LSP positions count UTF-16 code units by default, which is what JavaScript strings index by.
 const utf16Column = (_line, index) => index;
 
+/** A file's path inside the project as it's shown to agents: with forward slashes on every system. */
+const shown = (root, file) => path.relative(root, file).split(path.sep).join("/");
+
 /** One line of output per location: `path:line:col  text`, with the project folder left off. */
 export function formatLocation(root, file, range, lines) {
-  const relative = path.relative(root, file) || path.basename(file);
+  const relative = shown(root, file) || path.basename(file);
   const line = range.start.line;
   const text = lines?.[line]?.trim() ?? "";
   return `${relative}:${line + 1}:${range.start.character + 1}${text ? "  " + clip(text, 160) : ""}`;
@@ -167,8 +170,8 @@ export class Workspace {
   /** Turns a tool's position arguments into an LSP position. Lines and columns given to tools are 1-based. */
   position(file, { line, column, symbol, occurrence }) {
     const lines = this.lines(file);
-    if (lines.length === 0) throw new ToolError(`${path.relative(this.root, file)} is too big to read.`);
-    if (!Number.isInteger(line) || line < 1 || line > lines.length) throw new ToolError(`Line ${line} isn't in ${path.relative(this.root, file)} (it has ${lines.length}).`);
+    if (lines.length === 0) throw new ToolError(`${shown(this.root, file)} is too big to read.`);
+    if (!Number.isInteger(line) || line < 1 || line > lines.length) throw new ToolError(`Line ${line} isn't in ${shown(this.root, file)} (it has ${lines.length}).`);
     const text = lines[line - 1];
     if (symbol !== undefined) {
       const at = columnOf(text, String(symbol), occurrence ?? 1);
@@ -273,7 +276,7 @@ export class Workspace {
     const found = await server.diagnosticsFor(file, 4_000);
     if (found === null) return "The language server hasn't reported on this file yet. Try again in a moment.";
     if (found.length === 0) return "No problems.";
-    const relative = path.relative(this.root, file);
+    const relative = shown(this.root, file);
     return found
       .slice()
       .sort((a, b) => (a.severity ?? 1) - (b.severity ?? 1) || a.range.start.line - b.range.start.line)

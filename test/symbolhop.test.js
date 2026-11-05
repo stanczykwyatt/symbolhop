@@ -51,12 +51,20 @@ test("locations are one short line each, relative to the project", () => {
   assert.equal(formatLocation("/p", "/p/src/a.c", { start: { line: 2, character: 4 } }, ["", "", "    call();  "]), "src/a.c:3:5  call();");
 });
 
-test("files outside the project are refused, through links too", () => {
+test("files outside the project are refused, through links too", (t) => {
   const root = mkdtempSync(path.join(tmpdir(), "symbolhop-"));
   const outside = mkdtempSync(path.join(tmpdir(), "symbolhop-outside-"));
   writeFileSync(path.join(outside, "secret.c"), "int secret;\n");
   writeFileSync(path.join(root, "ok.c"), "int ok;\n");
-  symlinkSync(path.join(outside, "secret.c"), path.join(root, "link.c"));
+  try {
+    symlinkSync(path.join(outside, "secret.c"), path.join(root, "link.c"));
+  } catch (e) {
+    // Windows only lets an admin, or anyone with Developer Mode on, make links.
+    if (e.code !== "EPERM") throw e;
+    rmSync(root, { recursive: true });
+    rmSync(outside, { recursive: true });
+    return t.skip("making links needs Developer Mode on Windows");
+  }
   const ws = new Workspace(root);
   assert.equal(path.basename(ws.resolve("ok.c")), "ok.c");
   for (const bad of ["../" + path.basename(outside) + "/secret.c", path.join(outside, "secret.c"), "link.c", "", "a\0b", "missing.c", "."]) {
@@ -80,7 +88,7 @@ test("project files skip hidden and build folders", () => {
   const root = mkdtempSync(path.join(tmpdir(), "symbolhop-"));
   for (const dir of ["src", ".git", "node_modules/x", "build"]) mkdirSync(path.join(root, dir), { recursive: true });
   for (const f of ["src/a.c", ".git/b.c", "node_modules/x/c.c", "build/d.c", "e.py"]) writeFileSync(path.join(root, f), "");
-  assert.deepEqual(projectFiles(root, "c").map((f) => path.relative(root, f)), ["src/a.c"]);
+  assert.deepEqual(projectFiles(root, "c").map((f) => path.relative(root, f).split(path.sep).join("/")), ["src/a.c"]);
   assert.equal(projectFiles(root, "c", { maxFiles: 0 }).length, 0);
   rmSync(root, { recursive: true });
 });
